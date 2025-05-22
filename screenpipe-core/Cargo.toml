@@ -7,6 +7,9 @@ repository = { workspace = true }
 license = { workspace = true }
 edition = { workspace = true }
 
+[lints.rust]
+unexpected_cfgs = "allow"
+
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
