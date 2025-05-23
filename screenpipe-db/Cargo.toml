@@ -40,3 +40,6 @@ harness = false
 [[bench]]
 name = "new_db_benchmark"
 harness = false
+
+[package.metadata.cargo-udeps.ignore]
+normal = ["criterion", "tracing-subscriber"]

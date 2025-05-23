@@ -270,8 +270,6 @@ mod tests {
                 println!("app: {:?}", app.attributes().label);
             }
 
-            return;
-
             let app = desktop.application("Arc").unwrap();
 
             let children = app.children().unwrap();

@@ -1,5 +1,4 @@
 mod tests {
-    use log::LevelFilter;
     use screenpipe_audio::speaker::embedding::EmbeddingExtractor;
     use screenpipe_audio::speaker::embedding_manager::EmbeddingManager;
     use screenpipe_audio::speaker::segment::get_segments;
@@ -8,11 +7,9 @@ mod tests {
 
     fn setup() {
         // Initialize the logger with an info level filter
-        env_logger::builder()
-            .filter_level(log::LevelFilter::Debug)
-            .filter_module("tokenizers", LevelFilter::Error)
-            .try_init()
-            .unwrap();
+        let _ = tracing_subscriber::fmt()
+            .with_max_level(tracing::Level::DEBUG)
+            .try_init();
     }
 
     #[tokio::test]

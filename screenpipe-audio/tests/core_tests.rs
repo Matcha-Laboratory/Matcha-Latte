@@ -2,7 +2,7 @@
 mod tests {
     use anyhow::anyhow;
     use chrono::Utc;
-    use log::{debug, LevelFilter};
+    use log::debug;
     use screenpipe_audio::core::device::{
         default_input_device, default_output_device, list_audio_devices, parse_audio_device,
     };
@@ -29,12 +29,9 @@ mod tests {
 
     fn setup() {
         // Initialize the logger with an info level filter
-        if env_logger::builder()
-            .filter_level(log::LevelFilter::Debug)
-            .filter_module("tokenizers", LevelFilter::Error)
-            .try_init()
-            .is_ok()
-        {};
+        let _ = tracing_subscriber::fmt()
+            .with_max_level(tracing::Level::DEBUG)
+            .try_init();
     }
 
     // ! what happen in github action?
