@@ -1,6 +1,6 @@
 #[cfg(target_os = "macos")]
 mod apple_leak_bench {
-    use criterion::{criterion_group, criterion_main, Criterion};
+    use criterion::Criterion;
     use image::GenericImageView;
     use memory_stats::memory_stats;
     use screenpipe_vision::perform_ocr_apple;
@@ -14,7 +14,7 @@ mod apple_leak_bench {
         bytes as f64 / (1024.0 * 1024.0 * 1024.0)
     }
 
-    fn apple_ocr_benchmark(c: &mut Criterion) {
+    pub fn apple_ocr_benchmark(c: &mut Criterion) {
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         path.push("tests");
         path.push("testing_OCR.png");
@@ -93,10 +93,16 @@ mod apple_leak_bench {
         });
         group.finish();
     }
-
-    criterion_group!(benches, apple_ocr_benchmark);
-    criterion_main!(benches);
 }
+
+#[cfg(target_os = "macos")]
+use criterion::{criterion_group, criterion_main};
+
+#[cfg(target_os = "macos")]
+criterion_group!(benches, apple_leak_bench::apple_ocr_benchmark);
+
+#[cfg(target_os = "macos")]
+criterion_main!(benches);
 
 #[cfg(not(target_os = "macos"))]
 fn main() {
